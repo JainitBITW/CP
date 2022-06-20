@@ -19,7 +19,7 @@ typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
-ll m, n, q;
+int m, n, q;
 
 int main()
 {
@@ -31,58 +31,51 @@ int main()
     cin >> t;
     while (t--)
     {
-
-        cin >> n >> m;
+        cin >> n;
         vi v(n);
-        ll ans = 0;
+        vi w;
+        int aa = -1;
+        int f = 0;
         FOR(i, 0, n)
         {
-
             cin >> v[i];
-            ans += v[i];
-        }
-        if( n==1)
-        {
-            ans+=m-1;
-            cout<<ans;
-            nl;
-            continue;
         }
 
-        if (m < n)
+        FOR(i, 0, n)
         {
-            ll temp = 0;
-            ll ans1 = INT_MIN;
-            FOR(i, 0, m)
+            cin >> m;
+            if (m > v[i])
             {
-                temp += v[i];
+                f = 1;
+                continue;
             }
-            ans1 = max(ans1, temp);
-            for (int i = 0, j = m; i < n && j < n; i++, j++)
+            if (m == 0)
             {
-                temp += v[j];
-                temp -= v[i];
-                ans1 = max(ans1, temp);
+                aa = max(aa, v[i]);
+                continue;
             }
-            cout << ans1 + (((m) * (m - 1)) / 2);
-            nl;
-            continue;
+            w.PB(v[i] - m);
+        }
+        int as = w.size();
+        for (int i = 0; i < as - 1; i++)
+        {
+            if (w[i] != w[i + 1] || (aa > w[i]))
+            {
+                f = 1;
+                break;
+            }
+        }w.PB(aa);
+        if ( w[0] < aa)
+            f = 1;
+        if (f)
+        {
+            cout << "NO";
         }
         else
         {
-
-            int k = (m - n) / (n - 1);
-
-            ans += (k * ((n - 1) * (n))) +( n*(k-1));
-
-             k = (m - n) % (n - 1) +1 ;
-
-            ans += ( (((n-1) * (n)))-  (n-k+1) * ( n-k ));
-
-            cout << ans;
-            nl;
-            continue;
+            cout << "YES";
         }
+        nl;
     }
     return 0;
 }

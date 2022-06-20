@@ -1,0 +1,1 @@
+{"name":"Local: 1","url":"/home/jainit_bitw/Desktop/CP/codeforces/12jun/1.cpp","tests":[{"id":1655044438405,"input":"3\n3 1\n1 2 1\n4 5\n3 3 5 2\n5 16\n1 2 3 4 5\n","output":"3\n8\n0\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/jainit_bitw/Desktop/CP/codeforces/12jun/1.cpp","group":"local","local":true}

@@ -21,6 +21,8 @@ typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
 ll m, n, q;
 
+vll dp(100010);
+vll ans(100010);
 int main()
 {
     // freopen (file".in", "r", stdin);
@@ -28,61 +30,30 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    cin >> t;
+    //   cin>>t;
     while (t--)
     {
+        cin >> n;
 
-        cin >> n >> m;
-        vi v(n);
-        ll ans = 0;
         FOR(i, 0, n)
         {
-
-            cin >> v[i];
-            ans += v[i];
+            cin >> m;
+            dp[m]++;
         }
-        if( n==1)
+        FOR(i, 1, 100001)
         {
-            ans+=m-1;
-            cout<<ans;
-            nl;
-            continue;
-        }
-
-        if (m < n)
-        {
-            ll temp = 0;
-            ll ans1 = INT_MIN;
-            FOR(i, 0, m)
+            if (i - 2 >= 0)
             {
-                temp += v[i];
+                ans[i] = i * dp[i] + ans[i - 2];
             }
-            ans1 = max(ans1, temp);
-            for (int i = 0, j = m; i < n && j < n; i++, j++)
+            else ans[i]=i*dp[i];
+            if (ans[i - 1] > ans[i])
             {
-                temp += v[j];
-                temp -= v[i];
-                ans1 = max(ans1, temp);
+                ans[i] = ans[i - 1];
             }
-            cout << ans1 + (((m) * (m - 1)) / 2);
-            nl;
-            continue;
         }
-        else
-        {
-
-            int k = (m - n) / (n - 1);
-
-            ans += (k * ((n - 1) * (n))) +( n*(k-1));
-
-             k = (m - n) % (n - 1) +1 ;
-
-            ans += ( (((n-1) * (n)))-  (n-k+1) * ( n-k ));
-
-            cout << ans;
-            nl;
-            continue;
-        }
+        cout<<ans[100000];
+        nl;
     }
     return 0;
 }

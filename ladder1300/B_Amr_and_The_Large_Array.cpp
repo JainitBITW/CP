@@ -21,6 +21,13 @@ typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
 ll m, n, q;
 
+bool cmp(pair<int, int> &a, pair<int, int> &b)
+{
+    return a.S > b.S;
+}
+int l[1000010];
+int r[1000010];
+
 int main()
 {
     // freopen (file".in", "r", stdin);
@@ -28,61 +35,49 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--)
     {
-
-        cin >> n >> m;
+        cin >> n;
         vi v(n);
-        ll ans = 0;
+
+        vi ans;
+        map<int, int> mp;
         FOR(i, 0, n)
         {
-
             cin >> v[i];
-            ans += v[i];
+            mp[v[i]]++;
+            l[v[i]] = i;
+            if (r[v[i]] == 0)
+                r[v[i]] = i;
         }
-        if( n==1)
+        r[v[0]] = 0;
+        vpi w;
+        for (auto &e : mp)
         {
-            ans+=m-1;
-            cout<<ans;
-            nl;
-            continue;
+            w.PB({e.F, e.S});
         }
-
-        if (m < n)
+        sort(ALL(w), cmp);
+        FOR(i, 0, w.size())
         {
-            ll temp = 0;
-            ll ans1 = INT_MIN;
-            FOR(i, 0, m)
+            if (w[i].S == w[0].S)
             {
-                temp += v[i];
+                ans.PB(w[i].F);
             }
-            ans1 = max(ans1, temp);
-            for (int i = 0, j = m; i < n && j < n; i++, j++)
-            {
-                temp += v[j];
-                temp -= v[i];
-                ans1 = max(ans1, temp);
-            }
-            cout << ans1 + (((m) * (m - 1)) / 2);
-            nl;
-            continue;
+            else
+                break;
         }
-        else
+        int ans1 = 0;
+        int ans2 = INT_MAX;
+        FOR(i, 0, ans.size())
         {
-
-            int k = (m - n) / (n - 1);
-
-            ans += (k * ((n - 1) * (n))) +( n*(k-1));
-
-             k = (m - n) % (n - 1) +1 ;
-
-            ans += ( (((n-1) * (n)))-  (n-k+1) * ( n-k ));
-
-            cout << ans;
-            nl;
-            continue;
+            if (l[ans[i]] - r[ans[i]] < ans2 - ans1)
+            {
+                ans1 =r[ans[i]];
+                ans2 =l[ans[i]];
+            }
         }
+        cout << ans1 + 1 << " " << ans2 + 1;
     }
     return 0;
 }

@@ -20,7 +20,13 @@ typedef vector<ll> vll;
 typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
 ll m, n, q;
+ll gcd(ll a, ll b)
+{
 
+    if (a == 0)
+        return b;
+    return gcd(b % a, a);
+}
 int main()
 {
     // freopen (file".in", "r", stdin);
@@ -28,61 +34,39 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    cin >> t;
+    //   cin>>t;
     while (t--)
     {
-
-        cin >> n >> m;
+        cin >> n;
         vi v(n);
-        ll ans = 0;
+        FOR(i, 0, n)
+            cin >> v[i];
+
+        // ll lcm = v[0];
+        // FOR(i, 0, n)
+        // {
+        //     lcm = (ll)(lcm * v[i]) / gcd(lcm, v[i]);
+        // }
+        // // cout<<lcm;
         FOR(i, 0, n)
         {
-
-            cin >> v[i];
-            ans += v[i];
-        }
-        if( n==1)
-        {
-            ans+=m-1;
-            cout<<ans;
-            nl;
-            continue;
-        }
-
-        if (m < n)
-        {
-            ll temp = 0;
-            ll ans1 = INT_MIN;
-            FOR(i, 0, m)
+            ll x = v[i];
+            while (!(x % 3))
             {
-                temp += v[i];
+                x /= 3;
             }
-            ans1 = max(ans1, temp);
-            for (int i = 0, j = m; i < n && j < n; i++, j++)
+            while (!(x % 2))
             {
-                temp += v[j];
-                temp -= v[i];
-                ans1 = max(ans1, temp);
+                x /= 2;
             }
-            cout << ans1 + (((m) * (m - 1)) / 2);
-            nl;
-            continue;
+            if( i==0 )v[0]=x;
+            if (x != v[0])
+            {
+                cout << "NO";
+                return 0 ;
+            }
         }
-        else
-        {
-
-            int k = (m - n) / (n - 1);
-
-            ans += (k * ((n - 1) * (n))) +( n*(k-1));
-
-             k = (m - n) % (n - 1) +1 ;
-
-            ans += ( (((n-1) * (n)))-  (n-k+1) * ( n-k ));
-
-            cout << ans;
-            nl;
-            continue;
-        }
+        cout << "YES";
     }
     return 0;
 }

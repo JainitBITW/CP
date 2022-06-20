@@ -28,61 +28,39 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--)
     {
-
-        cin >> n >> m;
+        cin >> n;
         vi v(n);
-        ll ans = 0;
+        vpi w;
+        map<int, int> mp;
         FOR(i, 0, n)
         {
-
             cin >> v[i];
-            ans += v[i];
+            mp[v[i]]++;
         }
-        if( n==1)
-        {
-            ans+=m-1;
-            cout<<ans;
-            nl;
-            continue;
-        }
+        ll ans = 0;
 
-        if (m < n)
+        for (auto &e : mp)
+            w.PB({e.F, e.S});
+
+        if ((n=w.size()) == 1)
         {
-            ll temp = 0;
-            ll ans1 = INT_MIN;
-            FOR(i, 0, m)
-            {
-                temp += v[i];
-            }
-            ans1 = max(ans1, temp);
-            for (int i = 0, j = m; i < n && j < n; i++, j++)
-            {
-                temp += v[j];
-                temp -= v[i];
-                ans1 = max(ans1, temp);
-            }
-            cout << ans1 + (((m) * (m - 1)) / 2);
-            nl;
+          
+            cout << 0 << " ";
+            cout <<( w[0].S )*1LL * (w[0].S - 1)/2;
+            nl; 
             continue;
         }
         else
-        {
-
-            int k = (m - n) / (n - 1);
-
-            ans += (k * ((n - 1) * (n))) +( n*(k-1));
-
-             k = (m - n) % (n - 1) +1 ;
-
-            ans += ( (((n-1) * (n)))-  (n-k+1) * ( n-k ));
-
-            cout << ans;
-            nl;
-            continue;
+        {cout << w[n-1].F-w[0].F<< " ";
+            cout << 1LL*w[0].S * (w[n-1].S);
+            nl; 
+            
         }
+
+        nl;
     }
     return 0;
 }

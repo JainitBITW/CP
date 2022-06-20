@@ -20,7 +20,8 @@ typedef vector<ll> vll;
 typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
 ll m, n, q;
-
+vi hsh(1110);
+vi hsh2(1110);
 int main()
 {
     // freopen (file".in", "r", stdin);
@@ -28,60 +29,57 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    cin >> t;
+    //   cin>>t;
     while (t--)
     {
-
-        cin >> n >> m;
-        vi v(n);
-        ll ans = 0;
-        FOR(i, 0, n)
+        cin >> n;
+        if (n == 1)
         {
-
-            cin >> v[i];
-            ans += v[i];
-        }
-        if( n==1)
-        {
-            ans+=m-1;
-            cout<<ans;
+            cout << 0;
             nl;
-            continue;
+            return 0;
         }
 
-        if (m < n)
+        FOR(j, 2, n + 1)
         {
-            ll temp = 0;
-            ll ans1 = INT_MIN;
-            FOR(i, 0, m)
+            int x = j;
+            for (int i = 2; i * i <= x; i++)
             {
-                temp += v[i];
+                int z = 1;
+                while (x % i == 0)
+                {
+                    z *= i;
+                    x /= i;
+                    hsh[z]++;
+                }
             }
-            ans1 = max(ans1, temp);
-            for (int i = 0, j = m; i < n && j < n; i++, j++)
-            {
-                temp += v[j];
-                temp -= v[i];
-                ans1 = max(ans1, temp);
-            }
-            cout << ans1 + (((m) * (m - 1)) / 2);
-            nl;
-            continue;
+            hsh[x]++;
         }
-        else
+
+        FOR(i, 2, n + 1)
         {
-
-            int k = (m - n) / (n - 1);
-
-            ans += (k * ((n - 1) * (n))) +( n*(k-1));
-
-             k = (m - n) % (n - 1) +1 ;
-
-            ans += ( (((n-1) * (n)))-  (n-k+1) * ( n-k ));
-
-            cout << ans;
-            nl;
-            continue;
+            if (hsh[i])
+                m++;
+        }
+        cout << m << endl;
+        for (int i = 2; i < 1110; i++)
+        {
+            int z = i;
+            if (hsh2[z] == 0)
+            {
+                while (z <= n)
+                {
+                    hsh2[z] = 1;
+                    cout << z << " ";
+                    z *= i;
+                }
+            }
+            int s = i;
+            while (s <= n)
+            {
+                hsh2[s]++;
+                s += i;
+            }
         }
     }
     return 0;

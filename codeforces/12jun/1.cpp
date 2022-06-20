@@ -31,58 +31,28 @@ int main()
     cin >> t;
     while (t--)
     {
-
-        cin >> n >> m;
+        cin >> n>>m;
         vi v(n);
-        ll ans = 0;
-        FOR(i, 0, n)
+        for (int i = 0; i < n; i++)
         {
-
             cin >> v[i];
-            ans += v[i];
         }
-        if( n==1)
-        {
-            ans+=m-1;
-            cout<<ans;
-            nl;
-            continue;
-        }
+        ll ans = 0;
 
-        if (m < n)
+        for (int i = 0; i < n; i++)
         {
-            ll temp = 0;
-            ll ans1 = INT_MIN;
-            FOR(i, 0, m)
+            if (v[i] > m)
             {
-                temp += v[i];
+                ans += v[i] - m;
+                m = 0;
             }
-            ans1 = max(ans1, temp);
-            for (int i = 0, j = m; i < n && j < n; i++, j++)
+            else
             {
-                temp += v[j];
-                temp -= v[i];
-                ans1 = max(ans1, temp);
+                m -= v[i];
             }
-            cout << ans1 + (((m) * (m - 1)) / 2);
-            nl;
-            continue;
         }
-        else
-        {
-
-            int k = (m - n) / (n - 1);
-
-            ans += (k * ((n - 1) * (n))) +( n*(k-1));
-
-             k = (m - n) % (n - 1) +1 ;
-
-            ans += ( (((n-1) * (n)))-  (n-k+1) * ( n-k ));
-
-            cout << ans;
-            nl;
-            continue;
-        }
+        cout<<ans;
+        nl;
     }
     return 0;
 }

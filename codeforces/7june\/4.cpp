@@ -31,58 +31,46 @@ int main()
     cin >> t;
     while (t--)
     {
-
         cin >> n >> m;
-        vi v(n);
-        ll ans = 0;
-        FOR(i, 0, n)
+        int maxi = 0;
+        int ans = 0;
+        string s;
+        cin >> s;
+        FOR(i, 0, m)
         {
-
-            cin >> v[i];
-            ans += v[i];
-        }
-        if( n==1)
-        {
-            ans+=m-1;
-            cout<<ans;
-            nl;
-            continue;
-        }
-
-        if (m < n)
-        {
-            ll temp = 0;
-            ll ans1 = INT_MIN;
-            FOR(i, 0, m)
+            if (s[i] == 'W')
             {
-                temp += v[i];
+                ans++;
             }
-            ans1 = max(ans1, temp);
-            for (int i = 0, j = m; i < n && j < n; i++, j++)
-            {
-                temp += v[j];
-                temp -= v[i];
-                ans1 = max(ans1, temp);
-            }
-            cout << ans1 + (((m) * (m - 1)) / 2);
-            nl;
-            continue;
         }
-        else
+        maxi = ans;
+        if (m == 1)
         {
-
-            int k = (m - n) / (n - 1);
-
-            ans += (k * ((n - 1) * (n))) +( n*(k-1));
-
-             k = (m - n) % (n - 1) +1 ;
-
-            ans += ( (((n-1) * (n)))-  (n-k+1) * ( n-k ));
-
-            cout << ans;
+            int count = 0;
+            FOR(i, 0, n)
+            if (s[i] == 'B') count++;
+            if (count)
+                cout << 0;
+            else
+                cout << 1;
             nl;
             continue;
         }
+        for (int i = 1, j = m; i < m and j < m; i++, j++)
+        {
+            if (s[i] == 'W')
+            {
+                maxi--;
+            }
+            if (s[j] == 'W')
+            {
+                maxi++;
+            }
+            ans = min(maxi, ans);
+        }
+
+        cout << ans;
+        nl;
     }
     return 0;
 }

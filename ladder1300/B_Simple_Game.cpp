@@ -28,61 +28,24 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    cin >> t;
+    //   cin>>t;
     while (t--)
     {
-
         cin >> n >> m;
-        vi v(n);
-        ll ans = 0;
-        FOR(i, 0, n)
+        if (n == 1)
         {
-
-            cin >> v[i];
-            ans += v[i];
-        }
-        if( n==1)
-        {
-            ans+=m-1;
-            cout<<ans;
-            nl;
+            cout << 1;
             continue;
         }
-
-        if (m < n)
+        if (m > n / 2)
         {
-            ll temp = 0;
-            ll ans1 = INT_MIN;
-            FOR(i, 0, m)
-            {
-                temp += v[i];
-            }
-            ans1 = max(ans1, temp);
-            for (int i = 0, j = m; i < n && j < n; i++, j++)
-            {
-                temp += v[j];
-                temp -= v[i];
-                ans1 = max(ans1, temp);
-            }
-            cout << ans1 + (((m) * (m - 1)) / 2);
-            nl;
-            continue;
+            cout << m - 1;
         }
         else
         {
-
-            int k = (m - n) / (n - 1);
-
-            ans += (k * ((n - 1) * (n))) +( n*(k-1));
-
-             k = (m - n) % (n - 1) +1 ;
-
-            ans += ( (((n-1) * (n)))-  (n-k+1) * ( n-k ));
-
-            cout << ans;
-            nl;
-            continue;
+            cout << m + 1;
         }
+        nl;
     }
     return 0;
 }

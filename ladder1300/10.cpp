@@ -20,6 +20,16 @@ typedef vector<ll> vll;
 typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
 ll m, n, q;
+bool isprime(int n)
+{
+    for (int i = 2; i * i <= n; i++)
+        if (n % i == 0)
+        {
+            return false;
+        }
+
+    return true;
+}
 
 int main()
 {
@@ -28,61 +38,52 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    cin >> t;
+
+    vi v;
+    FOR(i, 2, 100010)
+    {
+        if (isprime(i))
+            v.PB(i);
+           
+    }
+    nl;
+    //   cin>>t;
     while (t--)
     {
-
         cin >> n >> m;
-        vi v(n);
-        ll ans = 0;
+        int arr[n][m];
         FOR(i, 0, n)
         {
-
-            cin >> v[i];
-            ans += v[i];
-        }
-        if( n==1)
-        {
-            ans+=m-1;
-            cout<<ans;
-            nl;
-            continue;
-        }
-
-        if (m < n)
-        {
-            ll temp = 0;
-            ll ans1 = INT_MIN;
-            FOR(i, 0, m)
+            FOR(j, 0, m)
             {
-                temp += v[i];
+                cin >> arr[i][j];
+                arr[i][j] = *lower_bound(ALL(v), arr[i][j]) - arr[i][j];
+                
             }
-            ans1 = max(ans1, temp);
-            for (int i = 0, j = m; i < n && j < n; i++, j++)
-            {
-                temp += v[j];
-                temp -= v[i];
-                ans1 = max(ans1, temp);
-            }
-            cout << ans1 + (((m) * (m - 1)) / 2);
             nl;
-            continue;
         }
-        else
+        int sum = 0;
+        int ans = INT_MAX;
+        FOR(i, 0, n)
         {
-
-            int k = (m - n) / (n - 1);
-
-            ans += (k * ((n - 1) * (n))) +( n*(k-1));
-
-             k = (m - n) % (n - 1) +1 ;
-
-            ans += ( (((n-1) * (n)))-  (n-k+1) * ( n-k ));
-
-            cout << ans;
-            nl;
-            continue;
+            sum = 0;
+            FOR(j, 0, m)
+            {
+                sum += arr[i][j];
+            }
+            ans = min(sum, ans);
         }
+        FOR(i, 0, m)
+        {
+            sum = 0;
+            FOR(j, 0, n)
+            {
+                sum += arr[j][i];
+            }
+            ans = min(sum, ans);
+        }
+
+        cout << ans;
     }
     return 0;
 }
