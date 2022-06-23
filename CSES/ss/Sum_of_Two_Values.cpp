@@ -8,9 +8,9 @@ using namespace std;
 #define MP make_pair
 #define PB push_back
 #define S second
-#define nl cout << endl
-#define nl cout << endl
+#define nl cout << '\n'
 #define ALL(container) (container).begin(), (container).end()
+#define MAX 1111111
 #define RALL(container) (container).rbegin(), (container).rend()
 #define SZ(container) ((int)container.size())
 char c;
@@ -28,19 +28,38 @@ int main()
     JALDI jaldi
 
         int t = 1;
-  cin>>t; 
+    // cin >> t
     while (t--)
     {
-        cin>>n; 
+        cin >> n >> m;
         vpi v(n);
-        FOR( i ,  0, n)cin>>v[i].S>>v[i].F;
+        FOR(i, 0, n)
+        {
+            cin >> v[i].F;
+            v[i].S = i + 1;
+        }
+        sort(ALL(v));
+        int i = 0;
+        int j = n - 1;
 
-        sort( ALL(v));
-        
-        int ans= 0 ; 
-        
+        while (i < j && j < n)
+        {
+            if (v[i].F + v[j].F == m)
+            {
+                cout << v[i].S << " " << v[j].S;
+                return 0;
+            }
+            else if (v[i].F + v[j].F < m)
+            {
 
-        
+                i++;
+            }
+            else
+                j--;
+        }
+
+        cout << "IMPOSSIBLE";
+        nl;
     }
-return 0;
+    return 0;
 }
