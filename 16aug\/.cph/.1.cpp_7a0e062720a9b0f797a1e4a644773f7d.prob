@@ -1,0 +1,1 @@
+{"name":"Local: 1","url":"/home/jainit_bitw/Desktop/CP/16aug\\/1.cpp","tests":[{"id":1660666919732,"input":"3\n2 1\n15 3\n3 1","output":"-1\n1 2 3\n2 3 1"},{"id":1660669673416,"input":"1\n12 2","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/jainit_bitw/Desktop/CP/16aug\\/1.cpp","group":"local","local":true}

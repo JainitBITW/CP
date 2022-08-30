@@ -1,0 +1,8 @@
+1 .
+Synset('beautiful.s.02')
+Definition:   (of weather) highly enjoyable
+Hyponyms:  []
+Hyponyms:  []
+
+*******************************
+
