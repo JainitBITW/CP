@@ -11,6 +11,7 @@ using namespace std;
 #define nl cout << '\n'
 #define ALL(container) (container).begin(), (container).end()
 #define MAX 1111111
+#define MOD (long long)1e9 + 7
 #define RALL(container) (container).rbegin(), (container).rend()
 #define SZ(container) ((int)container.size())
 char c;
@@ -32,33 +33,62 @@ int main()
     while (t--)
     {
         cin >> n;
-        ll ans = 0;
-        ll asn = 0;
         vll v(n);
         FOR(i, 0, n)
         {
             cin >> v[i];
         }
 
-        multiset<ll> s;
+        FOR(i, 1, n)
+        {
+            v[i] += v[i - 1];
+        }
+
+        if (v[n - 1] % 3)
+        {
+            cout << 0;
+            nl;
+            continue;
+        }
+
+        if (v[n - 1] == 0)
+        {
+            ll ci = count(ALL(v), 0);
+
+            cout << ((ci - 1) * (ci - 2)) / 2;
+            nl;
+            return 0;
+        }
+
+        vector<ll> a(n, 0);
+        vi b;
+
+        ll ans = 0;
 
         FOR(i, 0, n)
         {
-            ans += v[i];
-            s.insert(v[i]);
-            asn++;
-
-            while (ans < 0)
+            if (i > 0)
+                a[i] += a[i - 1];
+            if (v[i] == ((v[n - 1]) / 3))
             {
-                ans -= (*s.begin());
-                // cout<<v[i];
-                s.erase(s.begin());
-                // a}ns+=v[i];
-                asn--;
+                a[i]++;
+            }
+
+            //     cout << a[i];
+            //    ; nl
+
+            if (v[i] == (v[n - 1] / 3) * 2)
+            {
+                b.PB(i);
             }
         }
-        cout << asn;
-        nl;
+
+        FOR(i, 0, b.size())
+        {
+            ans += a[b[i]];
+        }
+
+        cout << ans;
     }
     return 0;
 }

@@ -11,6 +11,7 @@ using namespace std;
 #define nl cout << '\n'
 #define ALL(container) (container).begin(), (container).end()
 #define MAX 1111111
+#define MOD (long long)1e9 + 7
 #define RALL(container) (container).rbegin(), (container).rend()
 #define SZ(container) ((int)container.size())
 char c;
@@ -20,7 +21,12 @@ typedef vector<ll> vll;
 typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
 ll m, n, q;
-
+ll max(ll a, ll b)
+{
+    if (a > b)
+        return a;
+    return b;
+}
 int main()
 {
     // freopen (file".in", "r", stdin);
@@ -28,36 +34,37 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    //   cin>>t;
+    cin >> t;
     while (t--)
     {
         cin >> n;
-        ll ans = 0;
-        ll asn = 0;
+        string s;
+        cin >> s;
+
         vll v(n);
-        FOR(i, 0, n)
-        {
-            cin >> v[i];
-        }
-
-        multiset<ll> s;
+        ll real = 0;
 
         FOR(i, 0, n)
         {
-            ans += v[i];
-            s.insert(v[i]);
-            asn++;
-
-            while (ans < 0)
+            ll a = 0;
+            if (s[i] == 'L')
             {
-                ans -= (*s.begin());
-                // cout<<v[i];
-                s.erase(s.begin());
-                // a}ns+=v[i];
-                asn--;
+                a = i;
             }
+            else
+            {
+                a = n - 1 - i;
+            }
+            real += a;
+            v[i] = max(n - 1 - i, i) - a;
         }
-        cout << asn;
+        sort(ALL(v), greater<ll>());
+
+        for (auto &el : v)
+        {
+            real += el;
+            cout << real << ' ';
+        }
         nl;
     }
     return 0;

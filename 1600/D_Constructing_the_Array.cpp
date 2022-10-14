@@ -18,8 +18,22 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<vi> vvi;
+typedef pair<ll, ll> pll;
 typedef vector<pair<int, int>> vpi;
+const ll MOD = 1000000007;
 ll m, n, q;
+vll v(MAX);
+struct cmp
+{
+    bool operator()(const pair<int, int> &a, const pair<int, int> &b) const
+    {
+        int lena = a.second - a.first + 1;
+        int lenb = b.second - b.first + 1;
+        if (lena == lenb)
+            return a.first < b.first;
+        return lena > lenb;
+    }
+};
 
 int main()
 {
@@ -28,36 +42,34 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    //   cin>>t;
+    cin >> t;
     while (t--)
     {
         cin >> n;
-        ll ans = 0;
-        ll asn = 0;
-        vll v(n);
-        FOR(i, 0, n)
+
+        set<pair<int, int>, cmp> s;
+        s.insert({1, n});
+        int i = 1;
+        while (!s.empty())
         {
-            cin >> v[i];
-        }
-
-        multiset<ll> s;
-
-        FOR(i, 0, n)
-        {
-            ans += v[i];
-            s.insert(v[i]);
-            asn++;
-
-            while (ans < 0)
+            auto temp = *s.begin();
+            s.erase(s.begin());
+            if (temp.F == temp.S)
             {
-                ans -= (*s.begin());
-                // cout<<v[i];
-                s.erase(s.begin());
-                // a}ns+=v[i];
-                asn--;
+                v[temp.F] = i++;
+                continue;
             }
+            ll d = (temp.S + temp.F) / 2;
+            v[d] = i++;
+            if( d > temp.F)
+            s.insert({temp.F, d - 1});
+            if( d<temp.S)
+            s.insert({d + 1, temp.S});
         }
-        cout << asn;
+        FOR(i, 1, n + 1)
+        {
+            cout << v[i] << " ";
+        }
         nl;
     }
     return 0;

@@ -20,7 +20,19 @@ typedef vector<ll> vll;
 typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
 ll m, n, q;
-
+long long mod = 998244353;
+long long mpow(long long b, long long ex)
+{
+    ll r = 1;
+    while (ex)
+    {
+        if (ex & 1LL)
+            r = (r * b) % mod;
+        ex = ex >> 1;
+        b = (b * b) % mod;
+    }
+    return r;
+}
 int main()
 {
     // freopen (file".in", "r", stdin);
@@ -28,36 +40,29 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    //   cin>>t;
+    // cin >> t;
     while (t--)
     {
-        cin >> n;
+        cin >> n >> m;
+        if (n & 1)
+        {
+            cout << 1;
+            return 0;
+        }
+
         ll ans = 0;
-        ll asn = 0;
-        vll v(n);
-        FOR(i, 0, n)
-        {
-            cin >> v[i];
-        }
 
-        multiset<ll> s;
+        ll i = m / 2;
+        ans += (i * i);
+        ans %= mod;
+        i = (m + 1) / 2;
+        ans += (i * i);
+        ans %= mod;
 
-        FOR(i, 0, n)
-        {
-            ans += v[i];
-            s.insert(v[i]);
-            asn++;
+        i = (m * m) % mod;
+        ans *= mpow(i, mod-2);
 
-            while (ans < 0)
-            {
-                ans -= (*s.begin());
-                // cout<<v[i];
-                s.erase(s.begin());
-                // a}ns+=v[i];
-                asn--;
-            }
-        }
-        cout << asn;
+        cout << ans%mod;
         nl;
     }
     return 0;

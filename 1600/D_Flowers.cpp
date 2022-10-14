@@ -19,7 +19,36 @@ typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
+const ll MOD = 1000000007;
 ll m, n, q;
+vll pre(MAX);
+vll f(MAX,-1);
+
+ll solve(int a)
+{
+    if (a < 0)
+    {
+
+        return 0;
+    }
+    if (a == 0)
+    {
+        return 1;
+    }
+    if (f[a] != -1)
+    {
+        return f[a];
+    }
+
+    ll ans = solve(a - m);
+    ans %= MOD;
+    ans += solve(a - 1);
+    ans %= MOD;
+
+    f[a] = ans;
+
+    return f[a];
+}
 
 int main()
 {
@@ -28,36 +57,20 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    //   cin>>t;
+
+    cin >> t >> m;
+    solve(100005);
+    FOR(i, 1, 100005)
+    {
+        pre[i] = pre[i - 1] + f[i];
+        pre[i] %= MOD;
+        
+    }
     while (t--)
     {
-        cin >> n;
-        ll ans = 0;
-        ll asn = 0;
-        vll v(n);
-        FOR(i, 0, n)
-        {
-            cin >> v[i];
-        }
+        cin >> n >> q;
 
-        multiset<ll> s;
-
-        FOR(i, 0, n)
-        {
-            ans += v[i];
-            s.insert(v[i]);
-            asn++;
-
-            while (ans < 0)
-            {
-                ans -= (*s.begin());
-                // cout<<v[i];
-                s.erase(s.begin());
-                // a}ns+=v[i];
-                asn--;
-            }
-        }
-        cout << asn;
+        cout << (pre[q]-pre[n-1]+MOD)%MOD;
         nl;
     }
     return 0;

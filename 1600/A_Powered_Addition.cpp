@@ -19,8 +19,13 @@ typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
+const ll MOD = 1000000007;
 ll m, n, q;
 
+ll max(ll a, ll b)
+{
+    return (a > b ? a : b);
+}
 int main()
 {
     // freopen (file".in", "r", stdin);
@@ -28,36 +33,37 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    //   cin>>t;
+    cin >> t;
     while (t--)
     {
+
         cin >> n;
-        ll ans = 0;
-        ll asn = 0;
         vll v(n);
         FOR(i, 0, n)
         {
             cin >> v[i];
         }
-
-        multiset<ll> s;
-
+        ll last = LLONG_MIN;
+        ll maxi = 0;
         FOR(i, 0, n)
         {
-            ans += v[i];
-            s.insert(v[i]);
-            asn++;
 
-            while (ans < 0)
+            if (v[i] < last)
             {
-                ans -= (*s.begin());
-                // cout<<v[i];
-                s.erase(s.begin());
-                // a}ns+=v[i];
-                asn--;
+                maxi = max(maxi, abs(v[i] - last));
+            }
+            else
+            {
+                last = v[i];
             }
         }
-        cout << asn;
+
+        ll x = 0;
+        while ((1LL << x) <= maxi)
+        {
+            x++;
+        }
+        cout << x;
         nl;
     }
     return 0;

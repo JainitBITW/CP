@@ -11,6 +11,7 @@ using namespace std;
 #define nl cout << '\n'
 #define ALL(container) (container).begin(), (container).end()
 #define MAX 1111111
+#define MOD (long long)1e9 + 7
 #define RALL(container) (container).rbegin(), (container).rend()
 #define SZ(container) ((int)container.size())
 char c;
@@ -28,36 +29,18 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    //   cin>>t;
+    cin >> t;
     while (t--)
     {
         cin >> n;
-        ll ans = 0;
-        ll asn = 0;
-        vll v(n);
-        FOR(i, 0, n)
-        {
-            cin >> v[i];
-        }
+        string s;
+        string t = "Timur";
 
-        multiset<ll> s;
+        cin >> s;
+        sort(ALL(s));
+        sort(ALL(t));
 
-        FOR(i, 0, n)
-        {
-            ans += v[i];
-            s.insert(v[i]);
-            asn++;
-
-            while (ans < 0)
-            {
-                ans -= (*s.begin());
-                // cout<<v[i];
-                s.erase(s.begin());
-                // a}ns+=v[i];
-                asn--;
-            }
-        }
-        cout << asn;
+        cout << (s == t ? "YES" : "NO");
         nl;
     }
     return 0;

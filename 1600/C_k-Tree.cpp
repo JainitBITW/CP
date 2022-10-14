@@ -19,8 +19,55 @@ typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
+const ll MOD= 1000000007;
 ll m, n, q;
+vll ans1(111, -1);
+vll ans2(111, -1);
+ll fi(ll a)
+{
+    if (a < 0)
+    {
+        return 0;
+    }
+    if (a == 0)
+    {
+        return 1;
+    }
+    if (ans1[a] != -1)
+    {
+        return ans1[a];
+    }
+    ll ansa = 0;
 
+    FOR(i, 1, m + 1)
+    {
+        ansa += fi(a - i);
+        ansa %= (1000000007);
+    }
+    return ans1[a] = ansa;
+}
+ll fin(ll a)
+{
+    if (a < 0)
+    {
+        return 0;
+    }
+    if (a == 0)
+    {
+        return 1;
+    }
+    if (ans2[a] != -1)
+    {
+        return ans2[a];
+    }
+    ll ans = 0;
+    FOR(i, 1, q)
+    {
+        ans += fin(a - i);
+        ans %= (1000000007);
+    }
+    return ans2[a] = ans;
+}
 int main()
 {
     // freopen (file".in", "r", stdin);
@@ -31,33 +78,12 @@ int main()
     //   cin>>t;
     while (t--)
     {
-        cin >> n;
-        ll ans = 0;
-        ll asn = 0;
-        vll v(n);
-        FOR(i, 0, n)
-        {
-            cin >> v[i];
-        }
+        cin >> n >> m >> q;
 
-        multiset<ll> s;
+        fi(n);
+        fin(n);
 
-        FOR(i, 0, n)
-        {
-            ans += v[i];
-            s.insert(v[i]);
-            asn++;
-
-            while (ans < 0)
-            {
-                ans -= (*s.begin());
-                // cout<<v[i];
-                s.erase(s.begin());
-                // a}ns+=v[i];
-                asn--;
-            }
-        }
-        cout << asn;
+        cout <<( ans1[n] - ans2[n] +1000000007 )%(1000000007);
         nl;
     }
     return 0;

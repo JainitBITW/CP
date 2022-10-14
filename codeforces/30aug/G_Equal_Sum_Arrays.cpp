@@ -11,6 +11,7 @@ using namespace std;
 #define nl cout << '\n'
 #define ALL(container) (container).begin(), (container).end()
 #define MAX 1111111
+#define MOD (long long)1e9 + 7
 #define RALL(container) (container).rbegin(), (container).rend()
 #define SZ(container) ((int)container.size())
 char c;
@@ -20,6 +21,31 @@ typedef vector<ll> vll;
 typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
 ll m, n, q;
+
+vll f(30, -1);
+
+ll fin(int a)
+{
+    if (a < 0)
+    {
+        return 0;
+    }
+    if (a == 0)
+    {
+        return 1;
+    }
+    if (f[a] != -1)
+    {
+        return f[a];
+    }
+    ll ans = 0;
+
+    FOR(i, 1, 21)
+    {
+        ans += fin(a - i);
+    }
+    return f[a] = ans;
+}
 
 int main()
 {
@@ -32,32 +58,10 @@ int main()
     while (t--)
     {
         cin >> n;
-        ll ans = 0;
-        ll asn = 0;
-        vll v(n);
-        FOR(i, 0, n)
-        {
-            cin >> v[i];
-        }
 
-        multiset<ll> s;
+        fin(n);
 
-        FOR(i, 0, n)
-        {
-            ans += v[i];
-            s.insert(v[i]);
-            asn++;
-
-            while (ans < 0)
-            {
-                ans -= (*s.begin());
-                // cout<<v[i];
-                s.erase(s.begin());
-                // a}ns+=v[i];
-                asn--;
-            }
-        }
-        cout << asn;
+        cout << f[n];
         nl;
     }
     return 0;

@@ -11,6 +11,7 @@ using namespace std;
 #define nl cout << '\n'
 #define ALL(container) (container).begin(), (container).end()
 #define MAX 1111111
+#define MOD (long long)1e9 + 7
 #define RALL(container) (container).rbegin(), (container).rend()
 #define SZ(container) ((int)container.size())
 char c;
@@ -32,33 +33,47 @@ int main()
     while (t--)
     {
         cin >> n;
-        ll ans = 0;
-        ll asn = 0;
-        vll v(n);
+        vi v(n), w(n);
         FOR(i, 0, n)
         {
-            cin >> v[i];
+            cin >> v[i] >> w[i];
         }
-
-        multiset<ll> s;
-
-        FOR(i, 0, n)
+        if( n<3)
         {
-            ans += v[i];
-            s.insert(v[i]);
-            asn++;
-
-            while (ans < 0)
+            cout<<n;nl;
+            continue;
+        }
+        int last = v[0];
+        FOR(i, 1, n - 1)
+        {
+            if (w[i] >= v[i + 1] - v[i])
             {
-                ans -= (*s.begin());
-                // cout<<v[i];
-                s.erase(s.begin());
-                // a}ns+=v[i];
-                asn--;
+                if (w[i] >= v[i] -last)
+                {
+                    last = v[i];
+                    continue;
+                }
+                else
+                {
+                    last = v[i];
+                    q++;
+                }
+            }
+            else
+            {
+                if (w[i] < v[i]-last)
+                {
+                    last = v[i];
+                    q++;
+                }
+                else
+                {
+                    last = v[i] + w[i];
+                    q++;
+                }
             }
         }
-        cout << asn;
-        nl;
+        cout << q + 2;
     }
     return 0;
 }

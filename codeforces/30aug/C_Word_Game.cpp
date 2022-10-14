@@ -11,6 +11,7 @@ using namespace std;
 #define nl cout << '\n'
 #define ALL(container) (container).begin(), (container).end()
 #define MAX 1111111
+#define MOD (long long)1e9 + 7
 #define RALL(container) (container).rbegin(), (container).rend()
 #define SZ(container) ((int)container.size())
 char c;
@@ -28,36 +29,43 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    //   cin>>t;
+    cin >> t;
     while (t--)
     {
         cin >> n;
-        ll ans = 0;
-        ll asn = 0;
-        vll v(n);
-        FOR(i, 0, n)
+        vector<string> v[3];
+        vll ans(3);
+
+        map<string, int> mp;
+
+        FOR(i, 0, 3)
         {
-            cin >> v[i];
-        }
-
-        multiset<ll> s;
-
-        FOR(i, 0, n)
-        {
-            ans += v[i];
-            s.insert(v[i]);
-            asn++;
-
-            while (ans < 0)
+            FOR(j, 0, n)
             {
-                ans -= (*s.begin());
-                // cout<<v[i];
-                s.erase(s.begin());
-                // a}ns+=v[i];
-                asn--;
+                string s;
+                cin >> s;
+                v[i].PB(s);
+                mp[s]++;
             }
         }
-        cout << asn;
+
+        FOR(i, 0, 3)
+        {
+            FOR(j, 0, n)
+            {
+                if (mp[v[i][j]] == 1)
+                {
+                    ans[i] += 3;
+                }
+                else if (mp[v[i][j]] == 2)
+                {
+                    ans[i] += 1;
+                }
+            }
+        }
+
+        for (auto &le : ans)
+            cout << le << " ";
         nl;
     }
     return 0;

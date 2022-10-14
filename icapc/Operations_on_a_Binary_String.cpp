@@ -19,6 +19,7 @@ typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
+const ll MOD = 1000000007;
 ll m, n, q;
 
 int main()
@@ -28,36 +29,55 @@ int main()
     JALDI jaldi
 
         int t = 1;
-    //   cin>>t;
+    cin >> t;
     while (t--)
     {
-        cin >> n;
+        cin >> n >> m;
+        string s;
+        cin >> s;
+        vll mp;
+
+        ll count = 0;
         ll ans = 0;
-        ll asn = 0;
-        vll v(n);
-        FOR(i, 0, n)
-        {
-            cin >> v[i];
-        }
-
-        multiset<ll> s;
 
         FOR(i, 0, n)
         {
-            ans += v[i];
-            s.insert(v[i]);
-            asn++;
-
-            while (ans < 0)
+            if (s[i] == '1')
+                ans++;
+            if (s[i] == '0')
             {
-                ans -= (*s.begin());
-                // cout<<v[i];
-                s.erase(s.begin());
-                // a}ns+=v[i];
-                asn--;
+                count++;
+            }
+            else
+            {
+                if (count)
+                    mp.PB(count);
+                count = 0;
             }
         }
-        cout << asn;
+        if (count)
+            mp.PB(count);
+
+        sort(ALL(mp), greater<ll>());
+
+        q = mp.size();
+
+        FOR(i, 0, q)
+        {
+            if (mp[i] > ((m - 1) / 2))
+            {
+                ans += (m - 1) / 2;
+                m -= m;
+            }
+            else
+            {
+                ans += mp[i];
+                m -= ((2 * (mp[i])) + 1);
+            }
+            if (m == 0)
+                break;
+        }
+        cout << (ans);
         nl;
     }
     return 0;

@@ -19,6 +19,7 @@ typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
+const ll MOD = 1000000007;
 ll m, n, q;
 
 int main()
@@ -31,34 +32,36 @@ int main()
     //   cin>>t;
     while (t--)
     {
-        cin >> n;
-        ll ans = 0;
-        ll asn = 0;
-        vll v(n);
+        cin >> n >> m;
+        vll v(n + 2), w(n + 2);
+
         FOR(i, 0, n)
         {
             cin >> v[i];
         }
 
-        multiset<ll> s;
+        FOR(i, 0, m)
+        {
+            int a, b;
+            cin >> a >> b;
+
+            w[a]++;
+            w[b + 1]--;
+        }
+
+        FOR(i, 1, n + 2)
+        {
+            w[i] += w[i - 1];
+        }
+        ll ans = 0;
+        sort(ALL(w), greater<ll>());
+        sort(ALL(v), greater<ll>());
 
         FOR(i, 0, n)
         {
-            ans += v[i];
-            s.insert(v[i]);
-            asn++;
-
-            while (ans < 0)
-            {
-                ans -= (*s.begin());
-                // cout<<v[i];
-                s.erase(s.begin());
-                // a}ns+=v[i];
-                asn--;
-            }
+            ans += (v[i] * w[i]);
         }
-        cout << asn;
-        nl;
+        cout<<ans;
     }
     return 0;
 }

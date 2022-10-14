@@ -10,7 +10,7 @@ using namespace std;
 #define S second
 #define nl cout << '\n'
 #define ALL(container) (container).begin(), (container).end()
-#define MAX 1111111
+#define MAX 11111011
 #define RALL(container) (container).rbegin(), (container).rend()
 #define SZ(container) ((int)container.size())
 char c;
@@ -19,7 +19,9 @@ typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<vi> vvi;
 typedef vector<pair<int, int>> vpi;
+const ll MOD = 1000000007;
 ll m, n, q;
+vll dp(MAX);
 
 int main()
 {
@@ -32,33 +34,14 @@ int main()
     while (t--)
     {
         cin >> n;
-        ll ans = 0;
-        ll asn = 0;
-        vll v(n);
-        FOR(i, 0, n)
+        dp[2]=3;
+       
+        FOR(i, 3, n + 1)
         {
-            cin >> v[i];
+            dp[i] = (2 * dp[i - 1]) % MOD + (3 * dp[i - 2]) % MOD;
+
         }
-
-        multiset<ll> s;
-
-        FOR(i, 0, n)
-        {
-            ans += v[i];
-            s.insert(v[i]);
-            asn++;
-
-            while (ans < 0)
-            {
-                ans -= (*s.begin());
-                // cout<<v[i];
-                s.erase(s.begin());
-                // a}ns+=v[i];
-                asn--;
-            }
-        }
-        cout << asn;
-        nl;
+        cout<< dp[n]%MOD;
     }
     return 0;
 }
